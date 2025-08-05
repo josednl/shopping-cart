@@ -4,9 +4,19 @@
 	font-style: normal;
 }
 
+:root {
+	--nav-height: 80px;
+}
+
 * {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
 	font-family: 'Montserrat';
+}
+
+@media (max-width: 768px) {
+	:root {
+		--nav-height: 64px;
+	}
 }

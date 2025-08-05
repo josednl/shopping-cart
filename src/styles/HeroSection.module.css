@@ -1,0 +1,56 @@
+:root {
+    --hero-title-font-size: 60px;
+    --hero-subtitle-font-sie: 20px;
+}
+
+.section {
+    background-image: url('/images/store-906722_1280.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.container {
+    background-color: rgba(0, 0, 0, 0.6);
+    height: 100vh;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+    margin-top: calc(var(--nav-height) * -1);
+}
+
+.title {
+    text-align: center;
+    font-size: var(--hero-title-font-size);
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    text-align: center;
+    font-size: var(--hero-subtitle-font-sie);
+    margin-bottom: 20px;
+}
+
+.explore {
+    background-color: #d8d8d8;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+.explore:hover {
+    background-color: #d95d95;
+    color: #ffffff;
+}
+
+@media (max-width: 768px) {
+	:root {
+		--hero-title-font-size: 40px;
+        --hero-subtitle-font-sie: 15px;
+	}
+}
