@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { getProducts } from '../services/productService';
+import { getProducts } from '@/components/services/productService.js';
 import styles from '@/styles/BestSellers.module.css';
 import LeftIcon from '@/components/icons/leftIcon.jsx';
 import RightIcon from '@/components/icons/rightIcon.jsx';
