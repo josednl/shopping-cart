@@ -20,7 +20,7 @@ export default function Navbar ({ cartCount = 0 }) {
 		>
 			<div className={styles.container}>
 				<div className={styles['navbar-left']}>
-					<h1 className={styles.logo}>Fake Shop</h1>
+					<h1 className={styles.logo}>FakeShop</h1>
 				</div>
 				<button
 					className={styles['menu-toggle']}
