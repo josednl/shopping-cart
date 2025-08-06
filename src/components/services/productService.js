@@ -21,3 +21,13 @@ export const getProductById = async (id) => {
 		throw error;
 	}
 };
+
+export const getProducts = async (limit) => {
+	try {
+		const response = await axios.get(`${API_BASE_URL}/products?limit=${limit}`);
+		return response.data;
+	} catch (error) {
+		console.error('Error fetching products:', error);
+		throw error;
+	}
+};

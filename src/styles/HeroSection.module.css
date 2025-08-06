@@ -1,4 +1,5 @@
 :root {
+    --container-width: 1280px;
     --hero-title-font-size: 60px;
     --hero-subtitle-font-sie: 20px;
 }
