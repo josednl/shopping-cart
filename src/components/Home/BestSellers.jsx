@@ -3,6 +3,7 @@ import { getProducts } from '@/components/services/productService.js';
 import styles from '@/styles/BestSellers.module.css';
 import LeftIcon from '@/components/icons/leftIcon.jsx';
 import RightIcon from '@/components/icons/rightIcon.jsx';
+import StarRating from '@/components/common/starRating.jsx';
 
 export default function BestSellers() {
 	const [products, setProducts] = useState([]);
@@ -16,7 +17,7 @@ export default function BestSellers() {
 
 	const scroll = (direction) => {
 		const container = carouselRef.current;
-		const scrollAmount = 266;
+		const scrollAmount = 250;
 
 		if (direction === 'left') {
 			container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
@@ -60,6 +61,10 @@ export default function BestSellers() {
 									<p className={styles.category}>
 										{item.category}
 									</p>
+									<div className={styles.rating}>
+										<StarRating rating={item.rating.rate} />
+										<p className={styles['rating-count']}>({item.rating.count})</p>
+									</div>
 									<div className={styles.description}>
 										<p className={styles.price}>
 											${item.price}
