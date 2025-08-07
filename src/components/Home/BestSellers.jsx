@@ -1,19 +1,22 @@
-import { useState, useEffect, useRef } from 'react';
+import { useRef, useContext } from 'react';
+import { AppDataContext } from '@/components/contexts/AppDataContext.jsx';
 import { getProducts } from '@/components/services/productService.js';
+import useFetchHook from '@/components/utils/useFetchHook.jsx';
 import styles from '@/styles/BestSellers.module.css';
 import LeftIcon from '@/components/icons/leftIcon.jsx';
 import RightIcon from '@/components/icons/rightIcon.jsx';
 import StarRating from '@/components/common/starRating.jsx';
 
 export default function BestSellers() {
-	const [products, setProducts] = useState([]);
+	const { products, setProducts } = useContext(AppDataContext);
+	const { loading, error } = useFetchHook(products, setProducts, () => getProducts(10));
 	const carouselRef = useRef(null);
 
-	useEffect(() => {
-		getProducts(10).then((data) => {
-			setProducts(data);
-		});
-	}, []);
+	if (loading) return <p className={styles.loading}>Loading best sellers...</p>;
+
+	if (error) return <p className={styles.loading}>{error}</p>;
+
+	if (!products.length) return <p className={styles.loading}>No best sellers available...</p>;
 
 	const scroll = (direction) => {
 		const container = carouselRef.current;
@@ -25,10 +28,6 @@ export default function BestSellers() {
 			container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
 		}
 	};
-
-	if (!products.length) {
-		return <p className={styles.loading}>Loading best sellers...</p>;
-	}
 
 	return (
 		<section className={styles['best-sellers']}>
@@ -63,7 +62,9 @@ export default function BestSellers() {
 									</p>
 									<div className={styles.rating}>
 										<StarRating rating={item.rating.rate} />
-										<p className={styles['rating-count']}>({item.rating.count})</p>
+										<p className={styles['rating-count']}>
+											({item.rating.count})
+										</p>
 									</div>
 									<div className={styles.description}>
 										<p className={styles.price}>

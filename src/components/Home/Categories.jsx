@@ -1,36 +1,20 @@
-import { useState, useEffect } from 'react';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AppDataContext } from '@/components/contexts/AppDataContext.jsx';
 import styles from '@/styles/Categories.module.css';
+import useFetchHook from '@/components/utils/useFetchHook.jsx';
 import { getCategories } from '@/components/services/productService.js';
 import { categoryDetails } from '@/components/utils/categoryData.js';
 
 export default function Categories() {
-	const [categories, setCategories] = useState();
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState(null);
+	const { categories, setCategories } = useContext(AppDataContext);
+	const { loading, error } = useFetchHook(categories, setCategories, () => getCategories());
 
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const data = await getCategories();
-				setCategories(data);
-			} catch (err) {
-				setError('Failed to load categories:', err);
-			} finally {
-				setLoading(false);
-			}
-		};
-
-		fetchData();
-	}, []);
-
-	if (loading)
-		return <p className={styles.loading}>Loading collections...</p>;
+	if (loading) return <p className={styles.loading}>Loading collections...</p>;
 
 	if (error) return <p className={styles.loading}>{error}</p>;
 
-	if (!categories.length)
-		return <p className={styles.loading}>No categories available...</p>;
+	if (!categories.length) return <p className={styles.loading}>No categories available...</p>;
 
 	return (
 		<section className={styles.collections}>
