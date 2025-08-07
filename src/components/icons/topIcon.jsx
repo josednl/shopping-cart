@@ -1,4 +1,4 @@
-const ChevronTopIcon = ({ size = '200', color = '#000', ...props }) => {
+const ChevronTopIcon = ({ size = '20', color = '#000', ...props }) => {
 	return (
 		<svg
 			xmlns='http://www.w3.org/2000/svg'

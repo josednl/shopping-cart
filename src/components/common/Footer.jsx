@@ -41,7 +41,7 @@ export default function Footer() {
 							rel='noreferrer'
 							title='Twitter'
 						>
-							<TwitterIcon size='20' color='#ccc' />
+							<TwitterIcon color='#ccc' />
 						</Link>
 						<Link
 							to='https://facebook.com'
@@ -50,7 +50,7 @@ export default function Footer() {
 							rel='noreferrer'
 							title='Facebook'
 						>
-							<FacebookIcon size='20' color='#ccc' />
+							<FacebookIcon color='#ccc' />
 						</Link>
 						<Link
 							to='https://instagram.com'
@@ -59,7 +59,7 @@ export default function Footer() {
 							rel='noreferrer'
 							title='Instagram'
 						>
-							<InstagramIcon size='20' color='#ccc' />
+							<InstagramIcon color='#ccc' />
 						</Link>
 					</div>
 				</div>

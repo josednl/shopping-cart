@@ -3,10 +3,10 @@ import styles from '@/styles/FeatureHighlight.module.css';
 export default function FeatureHighlight() {
 	return (
 		<section className={styles.highlight}>
-			<div className={styles.container}>
-				<div className={styles.overlay}>
+			<div className={styles.overlay}>
+				<div className={styles.container}>
 					<div className={styles.content}>
-						<h2 className={styles.title}>Timeless Elegance</h2>
+						<p className={styles.title}>Timeless Elegance</p>
 						<p className={styles.subtitle}>
 							Explore our exclusive Fall Collection 2025
 						</p>

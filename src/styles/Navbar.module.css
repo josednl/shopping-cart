@@ -2,7 +2,7 @@
 	--nav-height: 80px;
 	--nav-font-size: 16px;
 	--nav-gap: 25px;
-	--nav-padding-x: 32px;
+	--nav-padding-x: 16px;
 	--logo-font-size: 24px;
 }
 
@@ -14,7 +14,7 @@
 	width: 100%;
 	position: sticky;
 	top: 0;
-	z-index: 100;
+	z-index: 1000;
 }
 
 .container {
@@ -158,7 +158,6 @@
 		--nav-height: 64px;
 		--nav-font-size: 14px;
 		--nav-gap: 16px;
-		--nav-padding-x: 20px;
 		--logo-font-size: 20px;
 	}
 
