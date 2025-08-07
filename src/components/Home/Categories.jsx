@@ -1,10 +1,10 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { AppDataContext } from '@/components/contexts/AppDataContext.jsx';
+import { AppDataContext } from '@/contexts/AppDataContext.jsx';
 import styles from '@/styles/Categories.module.css';
-import useFetchHook from '@/components/utils/useFetchHook.jsx';
-import { getCategories } from '@/components/services/productService.js';
-import { categoryDetails } from '@/components/utils/categoryData.js';
+import useFetchHook from '@/hooks/useFetchHook.jsx';
+import { getCategories } from '@/services/fakeStoreService.js';
+import { categoryDetails } from '@/utils/categoryData.js';
 
 export default function Categories() {
 	const { categories, setCategories } = useContext(AppDataContext);

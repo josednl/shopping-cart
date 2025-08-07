@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from '@/styles/BackToTopButton.module.css';
-import ChevronTopIcon from '@/components/icons/topIcon.jsx';
+import ChevronTopIcon from '@/icons/topIcon.jsx';
 
 const BackToTopButton = () => {
 	const [isVisible, setIsVisible] = useState(false);

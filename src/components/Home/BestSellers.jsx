@@ -1,10 +1,10 @@
 import { useRef, useContext } from 'react';
-import { AppDataContext } from '@/components/contexts/AppDataContext.jsx';
-import { getProducts } from '@/components/services/productService.js';
-import useFetchHook from '@/components/utils/useFetchHook.jsx';
+import { AppDataContext } from '@/contexts/AppDataContext.jsx';
+import { getProducts } from '@/services/fakeStoreService.js';
+import useFetchHook from '@/hooks/useFetchHook.jsx';
 import styles from '@/styles/BestSellers.module.css';
-import LeftIcon from '@/components/icons/leftIcon.jsx';
-import RightIcon from '@/components/icons/rightIcon.jsx';
+import LeftIcon from '@/icons/leftIcon.jsx';
+import RightIcon from '@/icons/rightIcon.jsx';
 import StarRating from '@/components/common/starRating.jsx';
 
 export default function BestSellers() {

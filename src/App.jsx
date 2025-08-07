@@ -3,8 +3,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from '@/components/common/Navbar.jsx';
 import Footer from '@/components/common/Footer.jsx';
 import BackToTopButton from '@/components/common/BackToTopButton.jsx';
-import HomePage from './components/pages/Home.jsx';
-import { AppDataProvider } from '@/components/contexts/AppDataProvider.jsx';
+import HomePage from '@/pages/Home.jsx';
+import { AppDataProvider } from '@/contexts/AppDataProvider.jsx';
 
 function App() {
 	return (

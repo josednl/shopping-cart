@@ -1,8 +1,8 @@
 import styles from '@/styles/WhyChooseUs.module.css';
-import ShippingIcon from '@/components/icons/shippingIcon.jsx';
-import SupportIcon from '@/components/icons/supportIcon.jsx';
-import QualityReportIcon from '@/components/icons/qualityIcon.jsx';
-import SecureIcon from '@/components/icons/secureIcon.jsx';
+import ShippingIcon from '@/icons/shippingIcon.jsx';
+import SupportIcon from '@/icons/supportIcon.jsx';
+import QualityReportIcon from '@/icons/qualityIcon.jsx';
+import SecureIcon from '@/icons/secureIcon.jsx';
 
 export default function WhyChooseUs() {
 	return (

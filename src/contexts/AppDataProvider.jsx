@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { AppDataContext } from '@/components/contexts/AppDataContext.jsx';
+import { AppDataContext } from '@/contexts/AppDataContext.jsx';
 
 export function AppDataProvider({ children }) {
     const [products, setProducts] = useState([]);

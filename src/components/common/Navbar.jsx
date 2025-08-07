@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styles from '@/styles/Navbar.module.css';
-import CartIcon from '@/components/icons/cartIcon.jsx';
+import CartIcon from '@/icons/cartIcon.jsx';
 
 export default function Navbar ({ cartCount = 0 }) {
 	const [menuOpen, setMenuOpen] = useState(false);

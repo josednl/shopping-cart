@@ -1,6 +1,6 @@
-import StarIcon from '@/components/icons/fullStarIcon.jsx';
-import StarHalfAltIcon from '@/components/icons/halfStarIcon.jsx';
-import LineStarIcon from '@/components/icons/lineStarIcon.jsx';
+import StarIcon from '@/icons/fullStarIcon.jsx';
+import StarHalfAltIcon from '@/icons/halfStarIcon.jsx';
+import LineStarIcon from '@/icons/lineStarIcon.jsx';
 
 export default function StarRating({ rating, max = 5 }) {
 	const fullStars = Math.floor(rating);
