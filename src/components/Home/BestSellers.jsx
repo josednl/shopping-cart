@@ -1,22 +1,17 @@
 import { useRef, useContext } from 'react';
 import { AppDataContext } from '@/contexts/AppDataContext.jsx';
-import { getProducts } from '@/services/fakeStoreService.js';
-import useFetchIfEmpty from '@/hooks/useFetchIfEmpty.jsx';
 import styles from '@/styles/BestSellers.module.css';
 import LeftIcon from '@/icons/leftIcon.jsx';
 import RightIcon from '@/icons/rightIcon.jsx';
 import ProductCard from '@/components/common/ProductCard.jsx';
 
 export default function BestSellers() {
-	const { bestSellers, setBestSellers } = useContext(AppDataContext);
-	const { loading, error } = useFetchIfEmpty(bestSellers, setBestSellers, () => getProducts(10));
+	const { bestSellers } = useContext(AppDataContext);
 	const carouselRef = useRef(null);
 
-	if (loading) return <p className={styles.loading}>Loading best sellers...</p>;
-
-	if (error) return <p className={styles.loading}>{error}</p>;
-
-	if (!bestSellers.length) return <p className={styles.loading}>No best sellers available...</p>;
+	if (!bestSellers || !bestSellers.length) {
+		return <p className={styles.loading}>Loading collections...</p>;
+	}
 
 	const scroll = (direction) => {
 		const container = carouselRef.current;

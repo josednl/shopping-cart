@@ -2,20 +2,15 @@ import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AppDataContext } from '@/contexts/AppDataContext.jsx';
 import styles from '@/styles/Categories.module.css';
-import useFetchIfEmpty from '@/hooks/useFetchIfEmpty.jsx';
-import { getCategories } from '@/services/fakeStoreService.js';
 import { categoryDetails } from '@/utils/categoryData.js';
 
 export default function Categories() {
-	const { categories, setCategories } = useContext(AppDataContext);
-	const { loading, error } = useFetchIfEmpty(categories, setCategories, () => getCategories());
+	const { categories } = useContext(AppDataContext);
 
-	if (loading) return <p className={styles.loading}>Loading collections...</p>;
-
-	if (error) return <p className={styles.loading}>{error}</p>;
-
-	if (!categories.length) return <p className={styles.loading}>No categories available...</p>;
-
+	if (!categories || !categories.length) {
+		return <p className={styles.loading}>Loading collections...</p>;
+	}
+	
 	return (
 		<section className={styles.collections}>
 			<div className={styles.container}>
