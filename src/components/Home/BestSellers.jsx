@@ -5,7 +5,7 @@ import useFetchHook from '@/hooks/useFetchHook.jsx';
 import styles from '@/styles/BestSellers.module.css';
 import LeftIcon from '@/icons/leftIcon.jsx';
 import RightIcon from '@/icons/rightIcon.jsx';
-import StarRating from '@/components/common/starRating.jsx';
+import ProductCard from '@/components/common/ProductCard.jsx';
 
 export default function BestSellers() {
 	const { products, setProducts } = useContext(AppDataContext);
@@ -42,40 +42,11 @@ export default function BestSellers() {
 					</button>
 					<div className={styles.carousel} ref={carouselRef}>
 						{products.map((item) => (
-							<div className={styles.card} key={item.id}>
-								<div className={styles['card__header']}>
-									<img
-										src={item.image}
-										alt={item.title}
-										className={styles.image}
-									/>
-								</div>
-								<div className={styles['card__footer']}>
-									<p
-										className={styles.name}
-										title={item.title}
-									>
-										{item.title}
-									</p>
-									<p className={styles.category}>
-										{item.category}
-									</p>
-									<div className={styles.rating}>
-										<StarRating rating={item.rating.rate} />
-										<p className={styles['rating-count']}>
-											({item.rating.count})
-										</p>
-									</div>
-									<div className={styles.description}>
-										<p className={styles.price}>
-											${item.price}
-										</p>
-										<button className={styles.button}>
-											Add to Cart
-										</button>
-									</div>
-								</div>
-							</div>
+							<ProductCard 
+								key={item.id}
+								product={item}
+								
+							/>
 						))}
 					</div>
 					<button

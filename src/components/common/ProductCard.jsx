@@ -1,0 +1,43 @@
+import StarRating from '@/components/common/StarRating.jsx';
+import styles from '@/styles/ProductCard.module.css';
+
+export default function ProductCard({
+	product,
+	onAddToCart = () => {},
+	showCategory = true,
+}) {
+	return (
+		<div className={styles.card}>
+			<div className={styles['image-wrapper']}>
+				<img
+					src={product.image}
+					alt={product.title}
+					className={styles.image}
+				/>
+			</div>
+			<div className={styles.info}>
+				<p className={styles.title} title={product.title}>
+					{product.title}
+				</p>
+				{showCategory && (
+					<p className={styles.category}>{product.category}</p>
+				)}
+				<div className={styles.rating}>
+					<StarRating rating={product.rating.rate} />
+					<p className={styles['rating-count']}>
+						({product.rating.count})
+					</p>
+				</div>
+				<div className={styles.description}>
+					<p className={styles.price}>${product.price}</p>
+					<button
+						className={styles.button}
+						onClick={() => onAddToCart(product)}
+					>
+						Add to Cart
+					</button>
+				</div>
+			</div>
+		</div>
+	);
+}
