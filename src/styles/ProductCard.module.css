@@ -4,6 +4,12 @@
 }
 
 .card {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+.container {
 	flex: 0 0 auto;
 	text-align: center;
 	scroll-snap-align: start;

@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 
-export default function useFetchHook(data, setData, fetchFn) {
+export default function useFetchIfEmpty(data, setData, fetchFn) {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 
 	useEffect(() => {
-		if (data?.length) {
+		const shouldFetch = !Array.isArray(data) || data.length === 0;
+
+		if (!shouldFetch) {
 			setLoading(false);
 			return;
 		}
@@ -15,7 +17,7 @@ export default function useFetchHook(data, setData, fetchFn) {
 				const result = await fetchFn();
 				setData(result);
 			} catch (err) {
-				setError('Failed to fetch data:', err);
+				setError(`Failed to fetch data: ${err.message}`);
 			} finally {
 				setLoading(false);
 			}
