@@ -5,10 +5,11 @@ import CategoryFilter from '@/components/common/CategoryFilter.jsx';
 import ProductGrid from '@/components/Shop/ProductGrid.jsx';
 import PaginationControls from '@/components/common/PaginationControls.jsx';
 import SearchBar from '@/components/common/SearchBar.jsx';
+import SortFilter from '@/components/common/SortFilter.jsx';
 
 export default function Shop() {
 	const [products, setProducts] = useState([]);
-	const {allProducts: allProducts} = useContext(AppDataContext);
+	const { allProducts: allProducts } = useContext(AppDataContext);
 	const [selectedCategory, setSelectedCategory] = useState('all');
 	const [currentPage, setCurrentPage] = useState(1);
 	const [totalProducts, setTotalProducts] = useState(0);
@@ -16,6 +17,7 @@ export default function Shop() {
 	const [error, setError] = useState(null);
 	const productsPerPage = 8;
 	const [searchTerm, setSearchTerm] = useState('');
+	const [sortOption, setSortOption] = useState('default');
 
 	useEffect(() => {
 		const fetchProducts = async () => {
@@ -23,10 +25,13 @@ export default function Shop() {
 			setError(null);
 
 			try {
-				console.log(allProducts)
-				let filtered = selectedCategory === 'all' ? allProducts : allProducts.filter((p) => p.category === selectedCategory);
+				console.log(allProducts);
+				let filtered =
+					selectedCategory === 'all'
+						? allProducts
+						: allProducts.filter((p) => p.category === selectedCategory);
 
-				if(searchTerm.trim()) {
+				if (searchTerm.trim()) {
 					filtered = filtered.filter((product) =>
 						product.title
 							.toLowerCase()
@@ -34,7 +39,29 @@ export default function Shop() {
 					);
 				}
 
-				setTotalProducts(filtered.length)
+				switch (sortOption) {
+					case 'price-asc':
+						filtered.sort((a, b) => a.price - b.price);
+						break;
+					case 'price-desc':
+						filtered.sort((a, b) => b.price - a.price);
+						break;
+					case 'rating-desc':
+						filtered.sort(
+							(a, b) => b.rating?.rate - a.rating?.rate
+						);
+						break;
+					case 'alpha-asc':
+						filtered.sort((a, b) => a.title.localeCompare(b.title));
+						break;
+					case 'alpha-desc':
+						filtered.sort((a, b) => b.title.localeCompare(a.title));
+						break;
+					default:
+						break;
+				}
+
+				setTotalProducts(filtered.length);
 
 				const startIndex = (currentPage - 1) * productsPerPage;
 				const paginated = filtered.slice(
@@ -49,9 +76,13 @@ export default function Shop() {
 				setLoading(false);
 			}
 		};
-
+		
 		fetchProducts();
-	}, [selectedCategory, currentPage, searchTerm]);
+	}, [allProducts, selectedCategory, currentPage, searchTerm, sortOption]);
+
+	useEffect(() => {
+		setCurrentPage(1);
+	}, [selectedCategory, searchTerm, sortOption]);
 
 	const totalPages = Math.ceil(totalProducts / productsPerPage);
 
@@ -86,7 +117,14 @@ export default function Shop() {
 			</div>
 			<div className={styles.shop}>
 				<div className={styles.container}>
-					<div style={{ display: 'flex', gap: '16px', marginBottom: '32px' }}>
+					<div
+						style={{
+							display: 'flex',
+							justifyContent: 'space-between',
+							gap: '16px',
+							marginBottom: '32px',
+						}}
+					>
 						<CategoryFilter
 							selectedCategory={selectedCategory}
 							onChange={handleCategoryChange}
@@ -95,6 +133,10 @@ export default function Shop() {
 							value={searchTerm}
 							onChange={handleSearchChange}
 							placeholder='Search products...'
+						/>
+						<SortFilter
+							value={sortOption}
+							onChange={setSortOption}
 						/>
 					</div>
 
