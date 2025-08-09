@@ -4,6 +4,7 @@ import Navbar from '@/components/common/Navbar.jsx';
 import Footer from '@/components/common/Footer.jsx';
 import BackToTopButton from '@/components/common/BackToTopButton.jsx';
 import HomePage from '@/pages/Home.jsx';
+import Shop from '@/pages/Shop.jsx';
 import { AppDataProvider } from '@/contexts/AppDataProvider.jsx';
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
 					<main className='main-content'>
 						<Routes>
 							<Route path='/' element={<HomePage />} />
+							<Route path='/shop' element={<Shop />} />
 						</Routes>
 					</main>
 					<Footer />

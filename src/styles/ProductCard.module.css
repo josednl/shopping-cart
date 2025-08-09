@@ -94,6 +94,12 @@
 	background-color: #bd2a6c;
 }
 
+@media (max-width: 550px) {
+	:root {
+		--card-width: 80%;
+	}
+}
+
 @media (max-width: 450px) {
 	:root {
 		--card-width: 100%;

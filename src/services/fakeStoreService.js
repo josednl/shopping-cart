@@ -47,7 +47,25 @@ export const getProductsByCategory = async (category) => {
 		const response = await axios.get(`${API_BASE_URL}/products/category/${encodeURIComponent(category)}`);
 		return response.data;
 	} catch (error) {
-		console.error(`Error fetching products for category "${category}":`, error);
+		console.error(`Error fetching products for category "${category}":`,error);
+		throw error;
+	}
+};
+
+export const getProductsByPage = async (page = 1, limit = 8) => {
+	try {
+		const response = await axios.get(`${API_BASE_URL}/products`);
+		const allProducts = response.data;
+
+		const startIndex = (page - 1) * limit;
+		const paginated = allProducts.slice(startIndex, startIndex + limit);
+
+		return {
+			items: paginated,
+			total: allProducts.length,
+		};
+	} catch (error) {
+		console.error('Error fetching products by page:', error);
 		throw error;
 	}
 };
