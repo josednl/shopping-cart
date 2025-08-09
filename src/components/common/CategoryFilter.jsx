@@ -5,7 +5,7 @@ export default function CategoryFilter({ selectedCategory, onChange }) {
 	const { categories } = useContext(AppDataContext);
 
 	return (
-		<div style={{ marginBottom: '32px', textAlign: 'center' }}>
+		<div style={{ textAlign: 'center' }}>
 			<select
 				value={selectedCategory}
 				style={{

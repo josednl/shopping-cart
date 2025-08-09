@@ -1,12 +1,17 @@
 import { useState, useEffect } from 'react';
 import { AppDataContext } from '@/contexts/AppDataContext.jsx';
-import { getCategories, getProducts } from '@/services/fakeStoreService.js';
+import {
+	getCategories,
+	getProducts,
+	getAllProducts,
+} from '@/services/fakeStoreService.js';
 
 export function AppDataProvider({ children }) {
-    const [bestSellers, setBestSellers] = useState([]);
-    const [categories, setCategories] = useState([]);
+	const [bestSellers, setBestSellers] = useState([]);
+	const [categories, setCategories] = useState([]);
+	const [allProducts, setAllProducts] = useState([]);
 
-    useEffect(() => {
+	useEffect(() => {
 		if (categories.length === 0) {
 			getCategories().then(setCategories).catch(console.error);
 		}
@@ -18,9 +23,24 @@ export function AppDataProvider({ children }) {
 		}
 	}, [bestSellers]);
 
-    return (
-        <AppDataContext.Provider value={{ bestSellers, setBestSellers, categories, setCategories }}>
-            {children}
-        </AppDataContext.Provider>
-    );
-};
+	useEffect(() => {
+		if (allProducts.length === 0) {
+			getAllProducts().then(setAllProducts).catch(console.error);
+		}
+	}, [allProducts]);
+
+	return (
+		<AppDataContext.Provider
+			value={{
+				bestSellers,
+				setBestSellers,
+				categories,
+				setCategories,
+				allProducts,
+				setAllProducts,
+			}}
+		>
+			{children}
+		</AppDataContext.Provider>
+	);
+}

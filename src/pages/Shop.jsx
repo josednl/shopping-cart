@@ -1,20 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { AppDataContext } from '@/contexts/AppDataContext.jsx';
-import {  getProductsByCategory, getProductsByPage } from '@/services/fakeStoreService.js';
 import styles from '@/styles/Shop.module.css';
-import ProductCard from '@/components/common/ProductCard.jsx';
 import CategoryFilter from '@/components/common/CategoryFilter.jsx';
 import ProductGrid from '@/components/Shop/ProductGrid.jsx';
 import PaginationControls from '@/components/common/PaginationControls.jsx';
+import SearchBar from '@/components/common/SearchBar.jsx';
 
 export default function Shop() {
 	const [products, setProducts] = useState([]);
+	const {allProducts: allProducts} = useContext(AppDataContext);
 	const [selectedCategory, setSelectedCategory] = useState('all');
 	const [currentPage, setCurrentPage] = useState(1);
 	const [totalProducts, setTotalProducts] = useState(0);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 	const productsPerPage = 8;
+	const [searchTerm, setSearchTerm] = useState('');
 
 	useEffect(() => {
 		const fetchProducts = async () => {
@@ -22,27 +23,26 @@ export default function Shop() {
 			setError(null);
 
 			try {
-				if (selectedCategory === 'all') {
-					const { items, total } = await getProductsByPage(
-						currentPage,
-						productsPerPage
-					);
-					setProducts(items);
-					setTotalProducts(total);
-				} else {
-					const filtered = await getProductsByCategory(
-						selectedCategory
-					);
-					setTotalProducts(filtered.length);
+				console.log(allProducts)
+				let filtered = selectedCategory === 'all' ? allProducts : allProducts.filter((p) => p.category === selectedCategory);
 
-					const startIndex = (currentPage - 1) * productsPerPage;
-					const paginated = filtered.slice(
-						startIndex,
-						startIndex + productsPerPage
+				if(searchTerm.trim()) {
+					filtered = filtered.filter((product) =>
+						product.title
+							.toLowerCase()
+							.includes(searchTerm.toLowerCase())
 					);
-
-					setProducts(paginated);
 				}
+
+				setTotalProducts(filtered.length)
+
+				const startIndex = (currentPage - 1) * productsPerPage;
+				const paginated = filtered.slice(
+					startIndex,
+					startIndex + productsPerPage
+				);
+
+				setProducts(paginated);
 			} catch (error) {
 				setError(`Failed to load products: ${error}`);
 			} finally {
@@ -51,7 +51,7 @@ export default function Shop() {
 		};
 
 		fetchProducts();
-	}, [selectedCategory, currentPage]);
+	}, [selectedCategory, currentPage, searchTerm]);
 
 	const totalPages = Math.ceil(totalProducts / productsPerPage);
 
@@ -64,6 +64,11 @@ export default function Shop() {
 		setCurrentPage(1);
 	};
 
+	const handleSearchChange = (term) => {
+		setSearchTerm(term);
+		setCurrentPage(1);
+	};
+
 	const goToNextPage = () => {
 		if (currentPage < totalPages) setCurrentPage((prev) => prev + 1);
 	};
@@ -71,10 +76,6 @@ export default function Shop() {
 	const goToPreviousPage = () => {
 		if (currentPage > 1) setCurrentPage((prev) => prev - 1);
 	};
-
-	if (error) return <p className={styles.loading}>{error}</p>;
-	if (!products.length)
-		return <p className={styles.loading}>No products available...</p>;
 
 	return (
 		<section>
@@ -85,13 +86,24 @@ export default function Shop() {
 			</div>
 			<div className={styles.shop}>
 				<div className={styles.container}>
-					<CategoryFilter
-						selectedCategory={selectedCategory}
-						onChange={handleCategoryChange}
-					/>
+					<div style={{ display: 'flex', gap: '16px', marginBottom: '32px' }}>
+						<CategoryFilter
+							selectedCategory={selectedCategory}
+							onChange={handleCategoryChange}
+						/>
+						<SearchBar
+							value={searchTerm}
+							onChange={handleSearchChange}
+							placeholder='Search products...'
+						/>
+					</div>
 
 					{loading ? (
 						<p className={styles.loading}>Loading...</p>
+					) : error ? (
+						<p className={styles.loading}>{error}</p>
+					) : !products.length ? (
+						<p className={styles.loading}>No products available</p>
 					) : (
 						<ProductGrid
 							products={products}
