@@ -1,15 +1,9 @@
 import ProductCard from '@/components/common/ProductCard.jsx';
+import styles from '@/styles/ProductGrid.module.css';
 
 export default function ProductGrid({ products, onAddToCart }) {
 	return (
-		<div
-			style={{
-				display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
-                gap: '16px',
-				padding: '16px'
-			}}
-		>
+		<div className={styles['products-grid']}>
 			{products.map((product) => (
 				<ProductCard
 					key={product.id}

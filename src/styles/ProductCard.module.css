@@ -98,10 +98,36 @@
 	:root {
 		--card-width: 80%;
 	}
+	
+	.card {
+		min-width: 250px;
+	}
+
+	.rating {
+		flex-wrap: wrap;
+	}
 }
 
 @media (max-width: 450px) {
 	:root {
 		--card-width: 100%;
+	}
+
+	.info {
+		height: auto;
+	}
+
+	.description {
+		flex-direction: column;
+		align-items: flex-end;
+	}
+
+	.card {
+		min-width: auto;
+	}
+
+	.rating {
+		gap: 0;
+		margin-bottom: 10px;
 	}
 }

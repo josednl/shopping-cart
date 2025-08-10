@@ -76,7 +76,7 @@ export default function Shop() {
 				setLoading(false);
 			}
 		};
-		
+
 		fetchProducts();
 	}, [allProducts, selectedCategory, currentPage, searchTerm, sortOption]);
 
@@ -117,27 +117,32 @@ export default function Shop() {
 			</div>
 			<div className={styles.shop}>
 				<div className={styles.container}>
-					<div
-						style={{
-							display: 'flex',
-							justifyContent: 'space-between',
-							gap: '16px',
-							marginBottom: '32px',
-						}}
-					>
-						<CategoryFilter
-							selectedCategory={selectedCategory}
-							onChange={handleCategoryChange}
-						/>
+					<div className={styles['filter-wrapper']}>
 						<SearchBar
 							value={searchTerm}
 							onChange={handleSearchChange}
 							placeholder='Search products...'
 						/>
-						<SortFilter
-							value={sortOption}
-							onChange={setSortOption}
-						/>
+						<div className={styles['filter-controls']}>
+							<div
+								className={styles['filter-controls-container']}
+							>
+								<div>
+									<p>Filter by:</p>
+									<CategoryFilter
+										selectedCategory={selectedCategory}
+										onChange={handleCategoryChange}
+									/>
+								</div>
+								<div>
+									<p>Sort by:</p>
+									<SortFilter
+										value={sortOption}
+										onChange={setSortOption}
+									/>
+								</div>
+							</div>
+						</div>
 					</div>
 
 					{loading ? (

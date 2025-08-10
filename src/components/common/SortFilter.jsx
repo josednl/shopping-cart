@@ -1,16 +1,11 @@
+import styles from '@/styles/Select.module.css';
+
 export default function SortFilter({ value, onChange }) {
 	return (
 		<select
 			value={value}
+			className={styles.select}
 			onChange={(e) => onChange(e.target.value)}
-			style={{
-				padding: '8px 16px',
-				fontSize: '16px',
-				borderRadius: '4px',
-				border: '1px solid #ccc',
-				backgroundColor: '#fff',
-				cursor: 'pointer',
-			}}
 		>
 			<option value='default'>Default</option>
 			<option value='price-asc'>Price: Low to High</option>

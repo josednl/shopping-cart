@@ -43,3 +43,45 @@
     text-align: center;
 }
 
+.filter-wrapper {
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	align-items: center;
+	gap: 16px;
+	margin-bottom: 32px;
+	padding: 16px;
+}
+
+.filter-controls {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.filter-controls-container {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	gap: 16px;
+	border: 1px solid #d95d95;
+	border-radius: 5px;
+	padding: 10px;
+}
+
+.filter-controls-container > p {
+	white-space: nowrap;
+}
+
+@media (max-width: 900px) { 
+	.filter-wrapper {
+		flex-direction: column;
+		align-items: stretch;
+	}
+}
+
+@media (max-width: 768px) {
+	.filter-controls-container {
+		flex-wrap: wrap;
+	}
+
+}
