@@ -6,11 +6,14 @@ import ProductGrid from '@/components/Shop/ProductGrid.jsx';
 import PaginationControls from '@/components/common/PaginationControls.jsx';
 import SearchBar from '@/components/common/SearchBar.jsx';
 import SortFilter from '@/components/common/SortFilter.jsx';
+import { useSearchParams } from 'react-router-dom';
 
 export default function Shop() {
 	const [products, setProducts] = useState([]);
 	const { allProducts: allProducts } = useContext(AppDataContext);
-	const [selectedCategory, setSelectedCategory] = useState('all');
+	const [searchParams] = useSearchParams();
+	const initialCategory = searchParams.get('category') || 'all';
+	const [selectedCategory, setSelectedCategory] = useState(initialCategory);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [totalProducts, setTotalProducts] = useState(0);
 	const [loading, setLoading] = useState(true);
@@ -81,8 +84,10 @@ export default function Shop() {
 	}, [allProducts, selectedCategory, currentPage, searchTerm, sortOption]);
 
 	useEffect(() => {
+		const categoryFromUrl = searchParams.get('category') || 'all'
+		setSelectedCategory(categoryFromUrl)
 		setCurrentPage(1);
-	}, [selectedCategory, searchTerm, sortOption]);
+	}, [searchParams]);
 
 	const totalPages = Math.ceil(totalProducts / productsPerPage);
 

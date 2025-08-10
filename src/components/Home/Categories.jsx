@@ -20,7 +20,7 @@ export default function Categories() {
 						const details = categoryDetails[category] || {};
 						return (
 							<Link
-								to={`/category/${encodeURIComponent(category)}`}
+								to={`/shop?category=${encodeURIComponent(category)}`}
 								key={category}
 								className={styles.card}
 							>
