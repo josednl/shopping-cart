@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext, useMemo } from 'react';
 import { AppDataContext } from '@/contexts/AppDataContext.jsx';
 import styles from '@/styles/Shop.module.css';
 import CategoryFilter from '@/components/common/CategoryFilter.jsx';
@@ -9,87 +9,64 @@ import SortFilter from '@/components/common/SortFilter.jsx';
 import { useSearchParams } from 'react-router-dom';
 
 export default function Shop() {
-	const [products, setProducts] = useState([]);
 	const { allProducts: allProducts } = useContext(AppDataContext);
 	const [searchParams] = useSearchParams();
+
 	const initialCategory = searchParams.get('category') || 'all';
 	const [selectedCategory, setSelectedCategory] = useState(initialCategory);
 	const [currentPage, setCurrentPage] = useState(1);
-	const [totalProducts, setTotalProducts] = useState(0);
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState(null);
-	const productsPerPage = 8;
 	const [searchTerm, setSearchTerm] = useState('');
 	const [sortOption, setSortOption] = useState('default');
 
-	useEffect(() => {
-		const fetchProducts = async () => {
-			setLoading(true);
-			setError(null);
+	const productsPerPage = 8;
 
-			try {
-				console.log(allProducts);
-				let filtered =
-					selectedCategory === 'all'
-						? allProducts
-						: allProducts.filter((p) => p.category === selectedCategory);
+	const filteredProducts = useMemo(() => {
+		let result = selectedCategory === 'all'
+				? [...allProducts]
+				: allProducts.filter((p) => p.category === selectedCategory);
 
-				if (searchTerm.trim()) {
-					filtered = filtered.filter((product) =>
-						product.title
-							.toLowerCase()
-							.includes(searchTerm.toLowerCase())
-					);
-				}
+		if (searchTerm.trim()) {
+			const term = searchTerm.toLowerCase();
+			result = result.filter(p => p.title.toLowerCase().includes(term))
+		}
 
-				switch (sortOption) {
-					case 'price-asc':
-						filtered.sort((a, b) => a.price - b.price);
-						break;
-					case 'price-desc':
-						filtered.sort((a, b) => b.price - a.price);
-						break;
-					case 'rating-desc':
-						filtered.sort(
-							(a, b) => b.rating?.rate - a.rating?.rate
-						);
-						break;
-					case 'alpha-asc':
-						filtered.sort((a, b) => a.title.localeCompare(b.title));
-						break;
-					case 'alpha-desc':
-						filtered.sort((a, b) => b.title.localeCompare(a.title));
-						break;
-					default:
-						break;
-				}
+		switch (sortOption) {
+			case 'price-asc':
+				result.sort((a, b) => a.price - b.price);
+				break;
+			case 'price-desc':
+				result.sort((a, b) => b.price - a.price);
+				break;
+			case 'rating-desc':
+				result.sort((a, b) => b.rating?.rate - a.rating?.rate);
+				break;
+			case 'alpha-asc':
+				result.sort((a, b) => a.title.localeCompare(b.title));
+				break;
+			case 'alpha-desc':
+				result.sort((a, b) => b.title.localeCompare(a.title));
+				break;
+		}
 
-				setTotalProducts(filtered.length);
+		return result;
+	}, [allProducts, selectedCategory, searchTerm, sortOption]);
 
-				const startIndex = (currentPage - 1) * productsPerPage;
-				const paginated = filtered.slice(
-					startIndex,
-					startIndex + productsPerPage
-				);
+	
+	const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
 
-				setProducts(paginated);
-			} catch (error) {
-				setError(`Failed to load products: ${error}`);
-			} finally {
-				setLoading(false);
-			}
-		};
-
-		fetchProducts();
-	}, [allProducts, selectedCategory, currentPage, searchTerm, sortOption]);
+	const paginatedProducts = useMemo(() => {
+		const start = (currentPage - 1) * productsPerPage;
+		return filteredProducts.slice(start, start + productsPerPage);
+	}, [filteredProducts, currentPage]);
 
 	useEffect(() => {
-		const categoryFromUrl = searchParams.get('category') || 'all'
-		setSelectedCategory(categoryFromUrl)
+		const categoryFromUrl = searchParams.get('category') || 'all';
+		setSelectedCategory(categoryFromUrl);
 		setCurrentPage(1);
 	}, [searchParams]);
 
-	const totalPages = Math.ceil(totalProducts / productsPerPage);
+	const hasError = !Array.isArray(allProducts);
+	const isLoading = allProducts.length === 0;
 
 	const handleAddToCart = (product) => {
 		console.log('Add to cart:', product);
@@ -150,15 +127,15 @@ export default function Shop() {
 						</div>
 					</div>
 
-					{loading ? (
+					{isLoading ? (
 						<p className={styles.loading}>Loading...</p>
-					) : error ? (
-						<p className={styles.loading}>{error}</p>
-					) : !products.length ? (
+					) : hasError ? (
+						<p className={styles.loading}>Error loading products.</p>
+					) : !paginatedProducts.length ? (
 						<p className={styles.loading}>No products available</p>
 					) : (
 						<ProductGrid
-							products={products}
+							products={paginatedProducts}
 							onAddToCart={handleAddToCart}
 						/>
 					)}
