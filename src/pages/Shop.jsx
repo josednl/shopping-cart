@@ -7,6 +7,7 @@ import PaginationControls from '@/components/common/PaginationControls.jsx';
 import SearchBar from '@/components/common/SearchBar.jsx';
 import SortFilter from '@/components/common/SortFilter.jsx';
 import { useSearchParams } from 'react-router-dom';
+import { useCart } from '@/contexts/CartContext.jsx';
 
 export default function Shop() {
 	const { allProducts: allProducts } = useContext(AppDataContext);
@@ -17,6 +18,7 @@ export default function Shop() {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [searchTerm, setSearchTerm] = useState('');
 	const [sortOption, setSortOption] = useState('default');
+	const { addToCart } = useCart();
 
 	const productsPerPage = 8;
 
@@ -69,7 +71,7 @@ export default function Shop() {
 	const isLoading = allProducts.length === 0;
 
 	const handleAddToCart = (product) => {
-		console.log('Add to cart:', product);
+		addToCart(product);
 	};
 
 	const handleCategoryChange = (category) => {

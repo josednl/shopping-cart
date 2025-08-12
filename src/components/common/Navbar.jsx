@@ -3,10 +3,13 @@ import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styles from '@/styles/Navbar.module.css';
 import CartIcon from '@/icons/cartIcon.jsx';
+import { useCart } from '@/contexts/CartContext.jsx';
 
-export default function Navbar ({ cartCount = 0 }) {
+export default function Navbar () {
 	const [menuOpen, setMenuOpen] = useState(false);
+	const { cartItems, toggleCart } = useCart();
 	const location = useLocation();
+	const cartCount = cartItems.length;
 
 	const toggleMenu = () => {
 		setMenuOpen(!menuOpen);
@@ -84,7 +87,7 @@ export default function Navbar ({ cartCount = 0 }) {
 							</Link>
 						</li>
 					</ul>
-					<Link to='/cart' className={styles['cart-icon']}>
+					<Link to='#' onClick={toggleCart} className={styles['cart-icon']}>
 						<CartIcon size='25' color='#ffffff' />
 						{cartCount > 0 && (
 							<span className={styles['cart-count']}>

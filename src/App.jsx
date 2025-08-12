@@ -6,21 +6,26 @@ import BackToTopButton from '@/components/common/BackToTopButton.jsx';
 import HomePage from '@/pages/Home.jsx';
 import Shop from '@/pages/Shop.jsx';
 import { AppDataProvider } from '@/contexts/AppDataProvider.jsx';
+import { CartProvider } from '@/contexts/CartProvider.jsx';
+import CartDrawer from '@/components/common/CartDrawer.jsx';
 
 function App() {
 	return (
 		<BrowserRouter>
 			<AppDataProvider>
-				<div className='app-layout'>
-					<Navbar />
-					<main className='main-content'>
-						<Routes>
-							<Route path='/' element={<HomePage />} />
-							<Route path='/shop' element={<Shop />} />
-						</Routes>
-					</main>
-					<Footer />
-				</div>
+				<CartProvider>
+					<div className='app-layout'>
+						<Navbar />
+						<main className='main-content'>
+							<Routes>
+								<Route path='/' element={<HomePage />} />
+								<Route path='/shop' element={<Shop />} />
+							</Routes>
+						</main>
+						<Footer />
+					</div>
+					<CartDrawer />
+				</CartProvider>
 				<BackToTopButton />
 			</AppDataProvider>
 		</BrowserRouter>
