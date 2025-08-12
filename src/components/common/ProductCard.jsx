@@ -1,11 +1,14 @@
 import StarRating from '@/components/common/StarRating.jsx';
 import styles from '@/styles/ProductCard.module.css';
+import { useCart } from '@/contexts/CartContext.jsx';
 
-export default function ProductCard({
-	product,
-	onAddToCart = () => {},
-	showCategory = true,
-}) {
+export default function ProductCard({ product, showCategory = true }) {
+	const { addToCart } = useCart();
+
+	const handleAddToCart = (product) => {
+		addToCart(product);
+	};
+
 	return (
 		<div className={styles.card}>
 			<div className={styles.container}>
@@ -33,7 +36,7 @@ export default function ProductCard({
 						<p className={styles.price}>${product.price}</p>
 						<button
 							className={styles.button}
-							onClick={() => onAddToCart(product)}
+							onClick={() => handleAddToCart(product)}
 						>
 							Add to Cart
 						</button>

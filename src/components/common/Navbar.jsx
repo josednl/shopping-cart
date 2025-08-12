@@ -7,9 +7,8 @@ import { useCart } from '@/contexts/CartContext.jsx';
 
 export default function Navbar () {
 	const [menuOpen, setMenuOpen] = useState(false);
-	const { cartItems, toggleCart } = useCart();
+	const { toggleCart, totalItems } = useCart();
 	const location = useLocation();
-	const cartCount = cartItems.length;
 
 	const toggleMenu = () => {
 		setMenuOpen(!menuOpen);
@@ -89,9 +88,9 @@ export default function Navbar () {
 					</ul>
 					<Link to='#' onClick={toggleCart} className={styles['cart-icon']}>
 						<CartIcon size='25' color='#ffffff' />
-						{cartCount > 0 && (
+						{totalItems > 0 && (
 							<span className={styles['cart-count']}>
-								{cartCount}
+								{totalItems}
 							</span>
 						)}
 					</Link>
