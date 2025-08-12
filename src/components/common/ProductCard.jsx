@@ -3,7 +3,8 @@ import styles from '@/styles/ProductCard.module.css';
 import { useCart } from '@/contexts/CartContext.jsx';
 
 export default function ProductCard({ product, showCategory = true }) {
-	const { addToCart } = useCart();
+	const { addToCart, cartItems } = useCart();
+	const isInCart = cartItems.some((item) => item.id === product.id);
 
 	const handleAddToCart = (product) => {
 		addToCart(product);
@@ -34,12 +35,18 @@ export default function ProductCard({ product, showCategory = true }) {
 					</div>
 					<div className={styles.description}>
 						<p className={styles.price}>${product.price}</p>
-						<button
-							className={styles.button}
-							onClick={() => handleAddToCart(product)}
-						>
-							Add to Cart
-						</button>
+						{isInCart ? (
+							<button className={styles['in-cart-button']} disabled>
+								Added to Cart ✓
+							</button>
+						) : (
+							<button
+								className={styles.button}
+								onClick={() => handleAddToCart(product)}
+							>
+								Add to Cart
+							</button>
+						)}
 					</div>
 				</div>
 			</div>

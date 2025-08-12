@@ -1,11 +1,20 @@
 import { useEffect } from 'react';
 import { useCart } from '@/contexts/CartContext.jsx';
 import styles from '@/styles/CartDrawer.module.css';
+import TrashIcon from '@/icons/trashIcon';
 
 export default function CartDrawer() {
-	const { isCartOpen, cartItems, closeCart, totalItems } = useCart();
+	const {
+		isCartOpen,
+		cartItems,
+		closeCart,
+		totalItems,
+		increaseQuantity,
+		decreaseQuantity,
+		removeProduct,
+	} = useCart();
 
-    useEffect(() => {
+	useEffect(() => {
 		if (isCartOpen) {
 			document.body.style.overflow = 'hidden';
 		} else {
@@ -25,6 +34,16 @@ export default function CartDrawer() {
 
 	const stopClickPropagation = (e) => {
 		e.stopPropagation();
+	};
+
+	const handleRemoveProduct = (id) => {
+		if (
+			confirm(
+				'Are you sure you want to remove this product from the cart?'
+			)
+		) {
+			removeProduct(id);
+		}
 	};
 
 	return (
@@ -69,6 +88,52 @@ export default function CartDrawer() {
 												item.quantity * item.price
 											).toFixed(2)}
 										</p>
+										<div
+											className={styles['cart-controls']}
+										>
+											<div
+												className={
+													styles['quantity-controls']
+												}
+											>
+												<button
+													onClick={() =>
+														decreaseQuantity(
+															item.id
+														)
+													}
+													className={
+														styles['qty-btn']
+													}
+												>
+													-
+												</button>
+												<span className={styles['qty']}>
+													{item.quantity}
+												</span>
+												<button
+													onClick={() =>
+														increaseQuantity(
+															item.id
+														)
+													}
+													className={
+														styles['qty-btn']
+													}
+												>
+													+
+												</button>
+											</div>
+											<button
+												className={styles['remove-btn']}
+												onClick={() =>
+													handleRemoveProduct(item.id)
+												}
+												title='Remove'
+											>
+												<TrashIcon color='#d95d95' />
+											</button>
+										</div>
 									</div>
 								</li>
 							))}
