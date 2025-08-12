@@ -1,9 +1,12 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useCart } from '@/contexts/CartContext.jsx';
 import styles from '@/styles/CartDrawer.module.css';
 import TrashIcon from '@/icons/trashIcon';
+import ConfirmModal from '@/components/common/confirmModal.jsx';
 
 export default function CartDrawer() {
+	const [showConfirm, setShowConfirm] = useState(false);
+	const [productToRemove, setProductToRemove] = useState(false);
 	const {
 		isCartOpen,
 		cartItems,
@@ -36,14 +39,29 @@ export default function CartDrawer() {
 		e.stopPropagation();
 	};
 
-	const handleRemoveProduct = (id) => {
-		if (
-			confirm(
-				'Are you sure you want to remove this product from the cart?'
-			)
-		) {
-			removeProduct(id);
+	const handleDecrease = (item) => {
+		if (item.quantity === 1) {
+			setProductToRemove(item.id);
+			setShowConfirm(true);
+		} else {
+			decreaseQuantity(item.id);
 		}
+	};
+
+	const handleRemoveProduct = (id) => {
+		setProductToRemove(id);
+		setShowConfirm(true);
+	};
+
+	const confirmRemove = () => {
+		removeProduct(productToRemove);
+		setShowConfirm(false);
+		setProductToRemove(null);
+	};
+
+	const cancelRemove = () => {
+		setShowConfirm(false);
+		setProductToRemove(null);
 	};
 
 	return (
@@ -98,9 +116,7 @@ export default function CartDrawer() {
 											>
 												<button
 													onClick={() =>
-														decreaseQuantity(
-															item.id
-														)
+														handleDecrease(item)
 													}
 													className={
 														styles['qty-btn']
@@ -140,6 +156,13 @@ export default function CartDrawer() {
 						</ul>
 					)}
 				</div>
+				{showConfirm && (
+					<ConfirmModal
+						message='Are you sure you want to remove this product from your cart?'
+						onConfirm={confirmRemove}
+						onCancel={cancelRemove}
+					/>
+				)}
 			</div>
 		</aside>
 	);
