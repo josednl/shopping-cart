@@ -1,43 +1,28 @@
-import { useState } from 'react';
+import { useMemo } from 'react';
 import styles from '@/styles/ProductDetailModal.module.css';
 import StarRating from '@/components/common/StarRating.jsx';
 import { useCart } from '@/contexts/CartContext.jsx';
 import ConfirmModal from '@/components/common/confirmModal.jsx';
 import TrashIcon from '@/icons/trashIcon';
+import useConfirmRemoval from '@/hooks/useConfirmRemoval.jsx';
 
 export default function ProductDetailModal({ product, onClose }) {
-	const { cartItems, addToCart, removeProduct, decreaseQuantity } = useCart();
-	const [showConfirm, setShowConfirm] = useState(false);
-	const [productToRemove, setProductToRemove] = useState(false);
+	const { cartItems, addToCart } = useCart();
+	const {
+		showConfirm,
+		handleRemoveProduct,
+		handleDecreaseWithConfirm,
+		confirmRemove,
+		cancelRemove,
+	} = useConfirmRemoval();
+
+	const cartItem = useMemo(
+		() => cartItems.find((item) => item.id === product.id),
+		[cartItems, product.id]
+	);
 	if (!product) return null;
 
-	const cartItem = cartItems.find((item) => item.id === product.id);
 	const isInCart = Boolean(cartItem);
-
-	const handleRemoveProduct = (id) => {
-		setProductToRemove(id);
-		setShowConfirm(true);
-	};
-
-    const handleDecrease = (item) => {
-		if (item.quantity === 1) {
-			setProductToRemove(item.id);
-			setShowConfirm(true);
-		} else {
-			decreaseQuantity(item.id);
-		}
-	};
-
-	const confirmRemove = () => {
-		removeProduct(productToRemove);
-		setShowConfirm(false);
-		setProductToRemove(null);
-	};
-
-	const cancelRemove = () => {
-		setShowConfirm(false);
-		setProductToRemove(null);
-	};
 
 	return (
 		<div className={styles.overlay} onClick={onClose}>
@@ -76,7 +61,7 @@ export default function ProductDetailModal({ product, onClose }) {
 								<div className={styles['cart-controls']}>
 									<button
 										onClick={() =>
-											handleDecrease(product)
+											handleDecreaseWithConfirm(cartItem)
 										}
 									>
 										-
@@ -89,7 +74,7 @@ export default function ProductDetailModal({ product, onClose }) {
 									</button>
 									<button
 										onClick={() =>
-											handleRemoveProduct(product.id)
+											handleRemoveProduct(product)
 										}
 									>
 										<TrashIcon size='15' color='#d95d95' />

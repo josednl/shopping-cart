@@ -4,19 +4,23 @@ import styles from '@/styles/CartDrawer.module.css';
 import TrashIcon from '@/icons/trashIcon';
 import ConfirmModal from '@/components/common/confirmModal.jsx';
 import ProductDetailModal from '@/components/common/ProductDetailModal.jsx';
+import useConfirmRemoval from '@/hooks/useConfirmRemoval.jsx';
 
 export default function CartDrawer() {
-	const [showConfirm, setShowConfirm] = useState(false);
-	const [productToRemove, setProductToRemove] = useState(false);
 	const {
 		isCartOpen,
 		cartItems,
 		closeCart,
 		totalItems,
 		increaseQuantity,
-		decreaseQuantity,
-		removeProduct,
 	} = useCart();
+	const {
+		showConfirm,
+		handleRemoveProduct,
+		handleDecreaseWithConfirm,
+		confirmRemove,
+		cancelRemove,
+	} = useConfirmRemoval();
 	const [selectedProduct, setSelectedProduct] = useState(null);
 
 	const handleTitleClick = (item) => {
@@ -41,45 +45,16 @@ export default function CartDrawer() {
 
 	if (!isCartOpen) return null;
 
-	const handleOverlayClick = () => {
-		closeCart();
-	};
-
-	const stopClickPropagation = (e) => {
-		e.stopPropagation();
-	};
-
-	const handleDecrease = (item) => {
-		if (item.quantity === 1) {
-			setProductToRemove(item.id);
-			setShowConfirm(true);
-		} else {
-			decreaseQuantity(item.id);
-		}
-	};
-
-	const handleRemoveProduct = (id) => {
-		setProductToRemove(id);
-		setShowConfirm(true);
-	};
-
-	const confirmRemove = () => {
-		removeProduct(productToRemove);
-		setShowConfirm(false);
-		setProductToRemove(null);
-	};
-
-	const cancelRemove = () => {
-		setShowConfirm(false);
-		setProductToRemove(null);
-	};
-
 	return (
-		<aside className={styles.overlay} onClick={handleOverlayClick}>
-			<div className={styles.drawer} onClick={stopClickPropagation}>
+		<aside className={styles.overlay} onClick={closeCart}>
+			<div className={styles.drawer} onClick={(e) => e.stopPropagation()}>
 				<div className={styles.header}>
 					<h3>Shopping Cart ({totalItems})</h3>
-					<button onClick={closeCart} className={styles['close-btn']}>
+					<button
+						onClick={closeCart}
+						className={styles['close-btn']}
+						aria-label='Close cart'
+					>
 						×
 					</button>
 				</div>
@@ -129,7 +104,9 @@ export default function CartDrawer() {
 											>
 												<button
 													onClick={() =>
-														handleDecrease(item)
+														handleDecreaseWithConfirm(
+															item
+														)
 													}
 													className={
 														styles['qty-btn']
@@ -156,7 +133,7 @@ export default function CartDrawer() {
 											<button
 												className={styles['remove-btn']}
 												onClick={() =>
-													handleRemoveProduct(item.id)
+													handleRemoveProduct(item)
 												}
 												title='Remove'
 											>
