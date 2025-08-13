@@ -54,6 +54,8 @@
 	line-height: 1.2;
 	height: 2.4em;
 	overflow: hidden;
+	cursor: pointer;
+	text-decoration: underline;
 	display: -webkit-box;
 	-webkit-line-clamp: 2;
 	-webkit-box-orient: vertical;

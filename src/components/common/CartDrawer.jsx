@@ -3,6 +3,7 @@ import { useCart } from '@/contexts/CartContext.jsx';
 import styles from '@/styles/CartDrawer.module.css';
 import TrashIcon from '@/icons/trashIcon';
 import ConfirmModal from '@/components/common/confirmModal.jsx';
+import ProductDetailModal from '@/components/common/ProductDetailModal.jsx';
 
 export default function CartDrawer() {
 	const [showConfirm, setShowConfirm] = useState(false);
@@ -16,6 +17,15 @@ export default function CartDrawer() {
 		decreaseQuantity,
 		removeProduct,
 	} = useCart();
+	const [selectedProduct, setSelectedProduct] = useState(null);
+
+	const handleTitleClick = (item) => {
+		setSelectedProduct(item);
+	};
+
+	const closeProductModal = () => {
+		setSelectedProduct(null);
+	};
 
 	useEffect(() => {
 		if (isCartOpen) {
@@ -92,6 +102,9 @@ export default function CartDrawer() {
 											className={
 												styles['cart-item-title']
 											}
+											onClick={() =>
+												handleTitleClick(item)
+											}
 										>
 											{item.title}
 										</h4>
@@ -161,6 +174,12 @@ export default function CartDrawer() {
 						message='Are you sure you want to remove this product from your cart?'
 						onConfirm={confirmRemove}
 						onCancel={cancelRemove}
+					/>
+				)}
+				{selectedProduct && (
+					<ProductDetailModal
+						product={selectedProduct}
+						onClose={closeProductModal}
 					/>
 				)}
 			</div>

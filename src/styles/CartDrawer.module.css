@@ -80,6 +80,8 @@
 	font-size: 15px;
 	margin: 0 0 8px 0;
 	line-height: 1.2;
+	cursor: pointer;
+	text-decoration: underline;
 }
 
 .cart-item-price {

@@ -24,8 +24,7 @@ export function CartProvider({ children }) {
 				};
 				return updated;
 			} else {
-				const { id, title, price, image } = product;
-				return [...prev, { id, title, price, image, quantity: 1 }];
+				return [...prev, { ...product, quantity: 1 }];
 			}
 		});
 	};

@@ -1,0 +1,157 @@
+.overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.5);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 1000;
+}
+
+.modal {
+	background: white;
+	border-radius: 8px;
+	max-width: 800px;
+	width: 90%;
+	position: relative;
+    overflow: hidden;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.close {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	border: none;
+	background: transparent;
+	font-size: 24px;
+	cursor: pointer;
+}
+
+.close:hover {
+    color: #e70a70;
+}
+
+.content {
+	display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.image-wrapper {
+    padding: 50px;
+    grid-column: 1 / 2;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+}
+
+.image-wrapper img {
+	width: 100%;
+	max-height: 300px;
+	object-fit: contain;
+}
+
+.info {
+    grid-column: 2 / 3;
+    padding: 50px;
+    background-color: #f1f5f9;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.category {
+    color: #d95d95;
+    text-transform: uppercase;
+}
+
+.text-muted {
+    color: #9b9b9b;
+}
+
+.price {
+    font-size: 24px;
+    margin-bottom: 24px;
+}
+
+.rating {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.description {
+    font-size: 15px;
+    line-height: 1.5;
+    margin-bottom: 16px;
+}
+
+.in-cart-box {
+	margin-top: 1rem;
+	border-radius: 6px;
+}
+
+.in-cart-label {
+	color: #00c951;
+	background-color: #f0fdf4;
+	border-radius: 5px;
+	padding: 10px;
+	margin-bottom: 0.5rem;
+}
+
+.quantity {
+	font-weight: bold;
+	margin-top: 15px;
+	margin-bottom: 10px;
+}
+
+.cart-controls {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-top: 8px;
+	margin-bottom: 16px;
+}
+
+.cart-controls button {
+	background-color: #eee;
+	border: 1px solid #ccc;
+	padding: 4px 8px;
+	cursor: pointer;
+	font-size: 16px;
+	border-radius: 4px;
+	transition: background-color 0.2s;
+}
+
+.add-btn {
+    background-color: #d95d95;
+	color: #ffffff;
+	border: none;
+	padding: 5px 8px;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: background 0.3s ease;
+}
+
+.add-btn:hover {
+	background-color: #bd2a6c;
+}
+
+.subtotal {
+	display: flex;
+	justify-content: space-between;
+	color: #6c757d;
+	font-size: 14px;
+	font-style: italic;
+}
+
+@media (max-width: 768px) {
+	.content {
+		display: flex;
+		flex-direction: column;
+	}
+}

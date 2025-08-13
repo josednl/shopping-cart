@@ -1,10 +1,16 @@
+import { useState } from 'react';
 import StarRating from '@/components/common/StarRating.jsx';
 import styles from '@/styles/ProductCard.module.css';
 import { useCart } from '@/contexts/CartContext.jsx';
+import ProductDetailModal from '@/components/common/ProductDetailModal.jsx';
 
 export default function ProductCard({ product, showCategory = true }) {
 	const { addToCart, cartItems } = useCart();
 	const isInCart = cartItems.some((item) => item.id === product.id);
+	const [showModal, setShowModal] = useState(false);
+
+	const openModal = () => setShowModal(true);
+	const closeModal = () => setShowModal(false);
 
 	const handleAddToCart = (product) => {
 		addToCart(product);
@@ -21,7 +27,11 @@ export default function ProductCard({ product, showCategory = true }) {
 					/>
 				</div>
 				<div className={styles.info}>
-					<p className={styles.title} title={product.title}>
+					<p
+						className={styles.title}
+						title={product.title}
+						onClick={openModal}
+					>
 						{product.title}
 					</p>
 					{showCategory && (
@@ -36,7 +46,10 @@ export default function ProductCard({ product, showCategory = true }) {
 					<div className={styles.description}>
 						<p className={styles.price}>${product.price}</p>
 						{isInCart ? (
-							<button className={styles['in-cart-button']} disabled>
+							<button
+								className={styles['in-cart-button']}
+								disabled
+							>
 								Added to Cart ✓
 							</button>
 						) : (
@@ -50,6 +63,9 @@ export default function ProductCard({ product, showCategory = true }) {
 					</div>
 				</div>
 			</div>
+			{showModal && (
+				<ProductDetailModal product={product} onClose={closeModal} />
+			)}
 		</div>
 	);
 }
