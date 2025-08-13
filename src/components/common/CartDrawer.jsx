@@ -5,6 +5,7 @@ import TrashIcon from '@/icons/trashIcon';
 import ConfirmModal from '@/components/common/confirmModal.jsx';
 import ProductDetailModal from '@/components/common/ProductDetailModal.jsx';
 import useConfirmRemoval from '@/hooks/useConfirmRemoval.jsx';
+import { Link } from 'react-router-dom';
 
 export default function CartDrawer() {
 	const {
@@ -22,6 +23,10 @@ export default function CartDrawer() {
 		cancelRemove,
 	} = useConfirmRemoval();
 	const [selectedProduct, setSelectedProduct] = useState(null);
+	const totalPrice = cartItems.reduce(
+		(sum, item) => sum + item.price * item.quantity,
+		0
+	);
 
 	const handleTitleClick = (item) => {
 		setSelectedProduct(item);
@@ -158,6 +163,17 @@ export default function CartDrawer() {
 						product={selectedProduct}
 						onClose={closeProductModal}
 					/>
+				)}
+				{cartItems.length > 0 && (
+					<footer className={styles.footer}>
+						<div className={styles.total}>
+							<span>Total:</span>
+							<span>${totalPrice.toFixed(2)}</span>
+						</div>
+						<Link to={'/shop'} onClick={closeCart} className={styles['shop-btn']}>
+							Continue Shopping
+						</Link>
+					</footer>
 				)}
 			</div>
 		</aside>
