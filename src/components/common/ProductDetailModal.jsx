@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useEffect } from 'react';
 import styles from '@/styles/ProductDetailModal.module.css';
 import StarRating from '@/components/common/StarRating.jsx';
 import { useCart } from '@/contexts/CartContext.jsx';
@@ -20,6 +20,14 @@ export default function ProductDetailModal({ product, onClose }) {
 		() => cartItems.find((item) => item.id === product.id),
 		[cartItems, product.id]
 	);
+
+	useEffect(() => {
+		document.body.style.overflow = 'hidden';
+		return () => {
+			document.body.style.overflow = 'auto';
+		};
+	}, []);
+
 	if (!product) return null;
 
 	const isInCart = Boolean(cartItem);
@@ -57,7 +65,9 @@ export default function ProductDetailModal({ product, onClose }) {
 								<p className={styles['in-cart-label']}>
 									✓ In your cart
 								</p>
-                                <p className={styles.quantity}>Quantity in cart: </p>
+								<p className={styles.quantity}>
+									Quantity in cart:{' '}
+								</p>
 								<div className={styles['cart-controls']}>
 									<button
 										onClick={() =>
@@ -66,9 +76,7 @@ export default function ProductDetailModal({ product, onClose }) {
 									>
 										-
 									</button>
-                                    <span>
-                                        {cartItem.quantity}
-                                    </span>
+									<span>{cartItem.quantity}</span>
 									<button onClick={() => addToCart(product)}>
 										+
 									</button>
@@ -80,13 +88,16 @@ export default function ProductDetailModal({ product, onClose }) {
 										<TrashIcon size='15' color='#d95d95' />
 									</button>
 								</div>
-                                <hr />
-                                <div className={styles.subtotal}>
-                                    <p>SubTotal</p>
-                                    <p>$ {(
+								<hr />
+								<div className={styles.subtotal}>
+									<p>SubTotal</p>
+									<p>
+										${' '}
+										{(
 											cartItem.quantity * product.price
-										).toFixed(2)}</p>
-                                </div>
+										).toFixed(2)}
+									</p>
+								</div>
 							</div>
 						)}
 						{!isInCart && (

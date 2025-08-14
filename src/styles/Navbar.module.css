@@ -31,6 +31,9 @@
 	font-size: var(--logo-font-size);
 	white-space: nowrap;
 	font-style: italic;
+	text-decoration: none;
+	color: #ffffff;
+	font-weight: 600;
 }
 
 .navbar-left {
