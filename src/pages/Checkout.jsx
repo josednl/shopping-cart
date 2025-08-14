@@ -36,7 +36,7 @@ export default function Checkout() {
 		<div className={styles['checkout-page']}>
 			<h1>Checkout</h1>
 			{cartItems.length === 0 ? (
-				<p>Your cart is empty.</p>
+				<p style={{ textAlign: 'center' }}>Your cart is empty.</p>
 			) : (
 				<>
 					<ul className={styles['cart-summary']}>
