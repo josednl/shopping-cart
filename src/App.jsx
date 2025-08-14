@@ -5,6 +5,7 @@ import Footer from '@/components/common/Footer.jsx';
 import BackToTopButton from '@/components/common/BackToTopButton.jsx';
 import HomePage from '@/pages/Home.jsx';
 import Shop from '@/pages/Shop.jsx';
+import About from '@/pages/About.jsx';
 import { AppDataProvider } from '@/contexts/AppDataProvider.jsx';
 import { CartProvider } from '@/contexts/CartProvider.jsx';
 import CartDrawer from '@/components/common/CartDrawer.jsx';
@@ -20,6 +21,7 @@ function App() {
 							<Routes>
 								<Route path='/' element={<HomePage />} />
 								<Route path='/shop' element={<Shop />} />
+								<Route path='/about' element={<About />} />
 							</Routes>
 						</main>
 						<Footer />
