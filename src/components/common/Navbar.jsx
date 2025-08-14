@@ -110,7 +110,10 @@ export default function Navbar() {
 					</ul>
 					<Link
 						to='#'
-						onClick={toggleCart}
+						onClick={() => {
+							toggleCart();
+							handleNavLinkClick();
+						}}
 						className={styles['cart-icon']}
 					>
 						<CartIcon size='25' color='#ffffff' />
