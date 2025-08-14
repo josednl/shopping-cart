@@ -4,7 +4,6 @@
 	align-items: center;
 	justify-content: space-between;
 	padding: 48px;
-	background-color: #f8f8f8;
 	flex-wrap: wrap;
 }
 
@@ -53,11 +52,13 @@
 	}
 }
 
-@media (max-width: 500px) {
+@media (max-width: 768px) {
 	.image {
 		width: 100%;
 	}
+}
 
+@media (max-width: 500px) {
 	.content {
 		min-width: auto;
 	}

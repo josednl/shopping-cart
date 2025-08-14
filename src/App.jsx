@@ -6,6 +6,7 @@ import BackToTopButton from '@/components/common/BackToTopButton.jsx';
 import HomePage from '@/pages/Home.jsx';
 import Shop from '@/pages/Shop.jsx';
 import About from '@/pages/About.jsx';
+import Contact from '@/pages/Contact.jsx';
 import { AppDataProvider } from '@/contexts/AppDataProvider.jsx';
 import { CartProvider } from '@/contexts/CartProvider.jsx';
 import CartDrawer from '@/components/common/CartDrawer.jsx';
@@ -22,6 +23,7 @@ function App() {
 								<Route path='/' element={<HomePage />} />
 								<Route path='/shop' element={<Shop />} />
 								<Route path='/about' element={<About />} />
+								<Route path='/contact' element={<Contact />} />
 							</Routes>
 						</main>
 						<Footer />

@@ -133,10 +133,6 @@
 		align-items: flex-end;
 	}
 
-	.card {
-		min-width: auto;
-	}
-
 	.rating {
 		gap: 0;
 		margin-bottom: 10px;
