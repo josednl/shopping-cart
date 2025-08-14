@@ -46,7 +46,7 @@ export default function Checkout() {
 									<strong>{item.title}</strong> —{' '}
 									{item.quantity} x ${item.price.toFixed(2)}
 								</div>
-								<div>
+								<div className={styles['total-per-product']}>
 									= ${(item.quantity * item.price).toFixed(2)}
 								</div>
 							</li>

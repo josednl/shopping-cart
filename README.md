@@ -1,12 +1,81 @@
-# React + Vite
+# Shopping Cart
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Description
 
-Currently, two official plugins are available:
+A modern e-commerce shopping cart application that allows users to browse products, add them to their cart, and complete purchases. The app features product filtering, detailed product pages, and a fully functional cart system with global state management.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Product Catalog**: Browse a list of products with categories and filters.
+- **Shopping Cart**: Add, remove and update product quantities in the cart.
+- **Persistent Cart State**: Cart data persists across navigation using React Context.
+- **Responsive Design**: Fully responsive for mobile, tablet, and desktop.
+- **Routing**: Navigate between Home, Shop, about, and Contact pages.
+
+---
+
+## Technologies Used
+
+- React
+- Vite
+- JavaScript (ES6+)
+- CSS
+- React Router
+- Context API (for cart and global data management)
+- Testing Library + Vitest (for units tests)
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/en)
+- [npm](https://docs.npmjs.com/)
+
+---
+
+### Installation
+
+1. Clone the repository
+
+```bash
+git clone https://github.com/josednl/shopping-cart.git
+cd shopping-cart
+```
+
+2. Install dependencies
+
+```bash
+npm install
+```
+
+3. Start development server
+
+```bash
+npm run dev
+```
+
+4. Open your browser
+
+Navigate to `http://localhost:5173` to view the application
+
+---
+
+### Building for Production
+
+```bash
+npm run build
+```
+
+### Running Tests
+
+```bash
+npm run test
+```
+
+## Live Demo
+
+[View the live demo here](https://shoppingcart-by-josednl.netlify.app/) or copy and paste this link: `https://shoppingcart-by-josednl.netlify.app/`

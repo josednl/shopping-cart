@@ -31,6 +31,11 @@
 	color: #555;
 }
 
+.total-per-product {
+    white-space: nowrap;
+    font-weight: 500;
+}
+
 .total {
 	text-align: right;
 	margin-top: 1.5rem;
@@ -100,4 +105,12 @@
 
 .back-to-shop-btn:hover {
 	background-color: #555;
+}
+
+@media (max-width: 768px) {
+    .cart-item {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
 }
