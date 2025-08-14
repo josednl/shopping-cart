@@ -8,13 +8,7 @@ import useConfirmRemoval from '@/hooks/useConfirmRemoval.jsx';
 import { Link } from 'react-router-dom';
 
 export default function CartDrawer() {
-	const {
-		isCartOpen,
-		cartItems,
-		closeCart,
-		totalItems,
-		increaseQuantity,
-	} = useCart();
+	const { isCartOpen, cartItems, closeCart, totalItems, increaseQuantity } = useCart();
 	const {
 		showConfirm,
 		handleRemoveProduct,
@@ -170,8 +164,19 @@ export default function CartDrawer() {
 							<span>Total:</span>
 							<span>${totalPrice.toFixed(2)}</span>
 						</div>
-						<Link to={'/shop'} onClick={closeCart} className={styles['shop-btn']}>
+						<Link
+							to={'/shop'}
+							onClick={closeCart}
+							className={styles['shop-btn']}
+						>
 							Continue Shopping
+						</Link>
+						<Link
+							to='/checkout'
+							onClick={closeCart}
+							className={styles['checkout-btn']}
+						>
+							Proceed to Checkout
 						</Link>
 					</footer>
 				)}
